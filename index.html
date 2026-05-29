@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KitLaboral — Herramientas de RRHH para PYMEs chilenas</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink:      #0A0E1A;
+    --ink-soft: #2A3142;
+    --paper:    #FAF8F3;
+    --cream:    #F2EFE6;
+    --line:     #E8E3D7;
+    --accent:   #1A4A8A;
+    --gold:     #C9A961;
+    --muted:    #6B6F7A;
+    --green:    #4A7C59;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:'Inter',sans-serif;background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  .serif{font-family:'Instrument Serif',serif;font-weight:400;letter-spacing:-0.01em}
+
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,248,243,.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--line);padding:0 2.5rem;height:64px;display:flex;align-items:center;justify-content:space-between}
+  .nav-logo{font-size:.95rem;font-weight:600;letter-spacing:.01em}
+  .nav-logo span{color:var(--accent);font-style:italic;font-family:'Instrument Serif',serif}
+  .nav-cta{background:var(--ink);color:var(--paper);border:none;border-radius:100px;padding:.55rem 1.4rem;font-size:.85rem;font-weight:500;cursor:pointer;text-decoration:none;font-family:inherit;transition:all .2s}
+  .nav-cta:hover{background:var(--accent)}
+
+  .hero{min-height:92vh;display:flex;align-items:center;padding:8rem 2.5rem 5rem;position:relative}
+  .hero::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:60%;height:1px;background:var(--line)}
+  .hero-inner{max-width:880px;margin:0 auto;text-align:center}
+  .hero-eyebrow{display:inline-flex;align-items:center;gap:.5rem;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:500;margin-bottom:2rem}
+  .hero-eyebrow::before,.hero-eyebrow::after{content:'';width:24px;height:1px;background:var(--line)}
+  .hero h1{font-size:clamp(2.5rem,6vw,4.5rem);line-height:1.05;margin-bottom:1.75rem;color:var(--ink)}
+  .hero h1 em{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;color:var(--accent)}
+  .hero-sub{font-size:clamp(1rem,1.6vw,1.15rem);color:var(--ink-soft);line-height:1.6;max-width:580px;margin:0 auto 2.5rem;font-weight:300}
+  .hero-actions{display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap}
+  .btn-dark{background:var(--ink);color:var(--paper);border:none;border-radius:100px;padding:1rem 2.25rem;font-size:.95rem;font-weight:500;cursor:pointer;text-decoration:none;font-family:inherit;transition:all .2s;display:inline-flex;align-items:center;gap:.5rem}
+  .btn-dark:hover{background:var(--accent);transform:translateY(-1px)}
+  .btn-ghost{background:transparent;color:var(--ink);border:1px solid var(--line);border-radius:100px;padding:1rem 2.25rem;font-size:.95rem;font-weight:500;cursor:pointer;text-decoration:none;font-family:inherit;transition:all .2s}
+  .btn-ghost:hover{background:var(--cream);border-color:var(--ink-soft)}
+
+  .hero-strip{margin-top:3.5rem;display:flex;gap:2.5rem;justify-content:center;align-items:center;flex-wrap:wrap;font-size:.8rem;color:var(--muted);font-weight:500;letter-spacing:.02em}
+  .hero-strip span{display:flex;align-items:center;gap:.4rem}
+  .hero-strip span::before{content:'✓';color:var(--green);font-weight:700}
+
+  section{padding:7rem 2.5rem}
+  .container{max-width:1100px;margin:0 auto}
+  .label{font-size:.78rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem}
+  .section-title{font-size:clamp(2rem,4vw,3rem);line-height:1.1;margin-bottom:1rem;color:var(--ink)}
+  .section-title em{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400}
+  .section-intro{font-size:1.05rem;color:var(--muted);line-height:1.7;max-width:580px;font-weight:300}
+
+  .pains{background:var(--cream);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .pains-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:4rem;border-top:1px solid var(--line);border-left:1px solid var(--line)}
+  .pain{padding:2.5rem 2rem;border-right:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--paper);transition:background .3s}
+  .pain:hover{background:var(--cream)}
+  .pain-num{font-family:'Instrument Serif',serif;font-style:italic;font-size:1.6rem;color:var(--accent);margin-bottom:1rem;display:block}
+  .pain h3{font-size:1.05rem;font-weight:600;margin-bottom:.6rem;line-height:1.35}
+  .pain p{font-size:.9rem;color:var(--muted);line-height:1.6;font-weight:300}
+
+  .deal{background:var(--ink);color:var(--paper);text-align:center}
+  .deal .label{color:var(--gold)}
+  .deal .section-title{color:var(--paper)}
+  .deal .section-intro{color:rgba(250,248,243,.65);margin:0 auto}
+  .deal-card{background:var(--paper);color:var(--ink);border-radius:24px;padding:3.5rem 2.5rem;margin:4rem auto 0;max-width:720px;position:relative;box-shadow:0 30px 80px rgba(0,0,0,.25)}
+  .deal-badge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--gold);color:var(--ink);padding:.45rem 1.25rem;border-radius:100px;font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+  .deal-title{font-size:1.85rem;line-height:1.2;margin-bottom:.5rem;font-weight:600}
+  .deal-title em{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;color:var(--accent)}
+  .deal-sub{font-size:.95rem;color:var(--muted);margin-bottom:2rem;font-weight:300}
+  .deal-price-row{display:flex;align-items:baseline;justify-content:center;gap:1rem;margin-bottom:.5rem}
+  .deal-price-old{font-size:1.2rem;color:var(--muted);text-decoration:line-through;font-weight:300}
+  .deal-price{font-family:'Instrument Serif',serif;font-size:4rem;font-weight:400;color:var(--ink);line-height:1}
+  .deal-currency{font-size:1.1rem;color:var(--muted);font-weight:400}
+  .deal-usd{font-size:.8rem;color:var(--muted);font-weight:400;margin-top:.4rem}
+  .deal-savings{display:inline-block;background:rgba(74,124,89,.12);color:var(--green);padding:.4rem 1rem;border-radius:100px;font-size:.85rem;font-weight:600;margin-bottom:2.5rem}
+  .deal-includes{border-top:1px solid var(--line);padding-top:2rem;margin-bottom:2.5rem}
+  .deal-includes h4{font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:1.25rem;font-weight:600}
+  .deal-list{list-style:none;text-align:left;max-width:440px;margin:0 auto}
+  .deal-list li{padding:.7rem 0;display:flex;align-items:flex-start;gap:.75rem;line-height:1.4;border-bottom:1px solid var(--line)}
+  .deal-list li:last-child{border-bottom:none}
+  .deal-list li::before{content:'→';color:var(--accent);font-weight:600;flex-shrink:0;margin-top:.1rem}
+  .deal-list li span{display:flex;flex-direction:column;gap:.15rem}
+  .deal-list li strong{color:var(--ink);font-weight:600;font-size:.98rem}
+  .deal-list li em{color:var(--muted);font-style:normal;font-weight:300;font-size:.85rem}
+  .deal-cta{background:var(--ink);color:var(--paper);border:none;border-radius:100px;padding:1.15rem 3rem;font-size:1rem;font-weight:500;cursor:pointer;text-decoration:none;font-family:inherit;transition:all .2s;display:inline-flex;align-items:center;gap:.5rem}
+  .deal-cta:hover{background:var(--accent);transform:translateY(-2px)}
+
+  .products{background:var(--paper)}
+  .products-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin-top:4rem}
+  .product{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:2rem;transition:all .3s;display:flex;flex-direction:column}
+  .product:hover{border-color:var(--ink-soft);transform:translateY(-3px);box-shadow:0 20px 50px rgba(0,0,0,.06)}
+  .product-num{font-family:'Instrument Serif',serif;font-style:italic;font-size:1.4rem;color:var(--accent);margin-bottom:1.5rem}
+  .product h3{font-size:1.15rem;font-weight:600;margin-bottom:.5rem;line-height:1.3}
+  .product-desc{font-size:.88rem;color:var(--muted);line-height:1.6;margin-bottom:1.25rem;font-weight:300}
+  .product-list{list-style:none;margin:0 0 1.5rem;padding:0;flex-grow:1}
+  .product-list li{font-size:.82rem;color:var(--ink-soft);line-height:1.5;padding:.4rem 0 .4rem 1.2rem;position:relative;font-weight:400}
+  .product-list li::before{content:"\2713";position:absolute;left:0;color:var(--green);font-weight:700}
+  .product-format{font-size:.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:1rem}
+  .product-price{display:flex;align-items:baseline;gap:.4rem;margin-bottom:1.5rem}
+  .product-price strong{font-family:'Instrument Serif',serif;font-size:2rem;font-weight:400;color:var(--ink);line-height:1}
+  .product-price span{font-size:.85rem;color:var(--muted)}
+  .product-usd{font-size:.72rem;color:var(--muted);font-weight:400;margin-top:-1rem;margin-bottom:1.5rem}
+  .product-cta{background:var(--paper);color:var(--ink);border:1px solid var(--ink);border-radius:100px;padding:.7rem 1.5rem;font-size:.85rem;font-weight:500;cursor:pointer;text-decoration:none;font-family:inherit;transition:all .2s;text-align:center}
+  .product-cta:hover{background:var(--ink);color:var(--paper)}
+
+  .how{background:var(--cream);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:3rem;margin-top:4rem}
+  .step-num{font-family:'Instrument Serif',serif;font-style:italic;font-size:3rem;color:var(--accent);margin-bottom:1rem;line-height:1}
+  .step h4{font-size:1.05rem;font-weight:600;margin-bottom:.5rem}
+  .step p{font-size:.9rem;color:var(--muted);line-height:1.6;font-weight:300}
+
+  .faq{background:var(--paper)}
+  .faq-list{margin-top:4rem;max-width:760px;margin-left:auto;margin-right:auto}
+  .faq-item{border-bottom:1px solid var(--line);padding:1.5rem 0}
+  .faq-q{font-size:1rem;font-weight:600;color:var(--ink);margin-bottom:.6rem;display:flex;justify-content:space-between;align-items:center}
+  .faq-q::after{content:'+';color:var(--accent);font-size:1.3rem;font-weight:300}
+  .faq-a{font-size:.92rem;color:var(--muted);line-height:1.7;font-weight:300;max-width:640px}
+
+  .final{background:var(--ink);color:var(--paper);text-align:center;padding:7rem 2.5rem}
+  .final h2{font-size:clamp(2.2rem,4.5vw,3.5rem);line-height:1.1;margin-bottom:1.25rem}
+  .final h2 em{font-family:'Instrument Serif',serif;font-style:italic;color:var(--gold);font-weight:400}
+  .final p{color:rgba(250,248,243,.6);font-size:1.05rem;margin-bottom:2.5rem;font-weight:300}
+  .btn-gold{background:var(--gold);color:var(--ink);border:none;border-radius:100px;padding:1.15rem 3rem;font-size:1rem;font-weight:600;cursor:pointer;text-decoration:none;font-family:inherit;transition:all .2s;display:inline-flex;align-items:center;gap:.5rem}
+  .btn-gold:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(201,169,97,.3)}
+
+  footer{background:var(--ink);padding:2rem;text-align:center;font-size:.78rem;color:rgba(250,248,243,.3);border-top:1px solid rgba(250,248,243,.08)}
+  footer a{color:rgba(250,248,243,.5);text-decoration:none}
+
+  .wa{position:fixed;bottom:1.75rem;right:1.75rem;z-index:99;background:#25D366;color:white;width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.4rem;text-decoration:none;box-shadow:0 6px 24px rgba(37,211,102,.4);transition:all .2s}
+  .wa:hover{transform:scale(1.08)}
+
+  @media (max-width: 900px){
+    nav{padding:0 1.5rem}
+    section{padding:5rem 1.5rem}
+    .pains-grid,.products-grid,.how-grid{grid-template-columns:1fr}
+    .deal-card{padding:2.5rem 1.5rem}
+    .deal-price{font-size:3rem}
+    .hero{padding:7rem 1.5rem 4rem}
+    .hero-strip{gap:1rem;font-size:.75rem}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Kit<span>Laboral</span></div>
+  <a href="#pack" class="nav-cta">Ver pack →</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Hecho para PYMEs chilenas</div>
+    <h1>El kit de RRHH<br>que tu empresa <em>necesita.</em></h1>
+    <p class="hero-sub">Contrata. Paga. Documenta. Tres herramientas profesionales para que dejes de improvisar cada vez que un trabajador entra a tu empresa.</p>
+    <div class="hero-actions">
+      <a href="#pack" class="btn-dark">Ver pack completo →</a>
+      <a href="#productos" class="btn-ghost">Ver productos individuales</a>
+    </div>
+    <div class="hero-strip">
+      <span>Pago único</span>
+      <span>Sin suscripción</span>
+      <span>Tasas 2026</span>
+      <span>Descarga inmediata</span>
+    </div>
+  </div>
+</section>
+
+<section class="pains">
+  <div class="container">
+    <div style="text-align:center;max-width:740px;margin:0 auto">
+      <div class="label">El problema</div>
+      <h2 class="section-title">Contratar en Chile <em>no debería dar miedo.</em></h2>
+      <p class="section-intro" style="margin:1.5rem auto 0">Miles de emprendedores, pymes y negocios familiares contratan a su primer empleado sin saber por dónde partir. Y muchas personas terminan a cargo de los RRHH de toda una empresa sin que nadie les enseñara cómo. Si te suena, sigue leyendo.</p>
+    </div>
+    <div class="pains-grid">
+      <div class="pain"><span class="pain-num">01</span><h3>Vas a contratar y no sabes por dónde partir</h3><p>Tu negocio creció y necesitas tu primer trabajador. Pero entre contrato, documentos y cotizaciones, no sabes qué va primero ni si lo estás haciendo bien.</p></div>
+      <div class="pain"><span class="pain-num">02</span><h3>Te quedó el RRHH de toda la empresa encima</h3><p>Nadie te enseñó, pero ahora tú llevas los contratos, los sueldos y los papeles de todos. Aprendiendo sobre la marcha y con miedo a equivocarte.</p></div>
+      <div class="pain"><span class="pain-num">03</span><h3>Un abogado cobra más de lo que puedes</h3><p>$80.000 a $150.000 por un solo contrato no es viable cuando recién estás partiendo. Pero sabes que lo necesitas bien hecho.</p></div>
+      <div class="pain"><span class="pain-num">04</span><h3>"¿Cuánto le tengo que pagar realmente?"</h3><p>AFP, salud, AFC, impuesto único, reforma previsional... Cada mes la misma duda y el temor de descontar mal y meter la pata.</p></div>
+      <div class="pain"><span class="pain-num">05</span><h3>Los modelos de internet no te dan confianza</h3><p>Bajas un contrato gratis y está desactualizado, no aplica a Chile, y no sabes qué cláusula es obligatoria y cuál te puede traer problemas.</p></div>
+      <div class="pain"><span class="pain-num">06</span><h3>Te da nervios una fiscalización</h3><p>En el fondo sabes que tu proceso tiene huecos. Y la sola idea de la Inspección del Trabajo o una demanda laboral te quita el sueño.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="deal" id="pack">
+  <div class="container">
+    <div class="label">La solución</div>
+    <h2 class="section-title">Pack Completo de <em>RRHH para PYMEs</em></h2>
+    <p class="section-intro">Las tres herramientas que necesitas para gestionar a tu equipo sin software caro ni abogado de planta.</p>
+
+    <div class="deal-card">
+      <div class="deal-badge">★ Recomendado · Más vendido</div>
+      <h3 class="deal-title">Todo lo que necesitas, <em>en un solo pack.</em></h3>
+      <p class="deal-sub">Kit Onboarding + Kit Liquidación + Kit Contratos</p>
+
+      <div class="deal-price-row">
+        <span class="deal-price-old">$103.970</span>
+        <span class="deal-price">$87.990</span>
+        <span class="deal-currency">CLP</span>
+      </div>
+      <div class="deal-savings">↓  Ahorras $15.980 vs comprar por separado</div>
+
+      <div class="deal-includes">
+        <h4>Incluye los 3 kits completos</h4>
+        <ul class="deal-list">
+          <li><span><strong>Kit Onboarding</strong><em>Para recibir trabajadores sin errores</em></span></li>
+          <li><span><strong>Kit Liquidación de Remuneraciones</strong><em>Para calcular sueldos al instante</em></span></li>
+          <li><span><strong>Kit Contratos de Trabajo</strong><em>4 modelos legales listos para usar</em></span></li>
+        </ul>
+        <p style="text-align:center;font-size:.9rem;color:var(--muted);margin-top:1.5rem;font-weight:300">Pago único, sin suscripción ni renovaciones. Tuyo para siempre y lo recibes en tu correo apenas confirmas la compra.</p>
+      </div>
+
+      <a href="https://www.flow.cl/uri/M0H2t1mC4" class="deal-cta" target="_blank" rel="noopener">Quiero el pack completo →</a>
+    </div>
+  </div>
+</section>
+
+<section class="products" id="productos">
+  <div class="container">
+    <div style="text-align:center;max-width:680px;margin:0 auto">
+      <div class="label">¿Solo necesitas uno?</div>
+      <h2 class="section-title">También los <em>vendemos por separado.</em></h2>
+      <p class="section-intro" style="margin:1.5rem auto 0">Si solo te interesa una herramienta puntual, llévate lo que necesites. Los precios son fijos, pago único.</p>
+    </div>
+
+    <div class="products-grid">
+      <div class="product">
+        <span class="product-num">01</span>
+        <h3>Kit Onboarding</h3>
+        <p class="product-desc">Para que recibir a un trabajador nuevo deje de ser un caos. Sabes exactamente qué documentos pedir, cómo validarlos y cómo dejar todo ordenado desde el día uno.</p>
+        <ul class="product-list">
+          <li>Guía de validación de documentos con links directos a fuentes oficiales del Estado</li>
+          <li>7 plantillas de correo listas para copiar y enviar</li>
+          <li>Ficha de ingreso y checklists por trabajador, duplicables</li>
+        </ul>
+        <div class="product-format">2 archivos Word</div>
+        <div class="product-price"><strong>$21.990</strong><span>CLP</span></div>
+        <a href="https://www.flow.cl/uri/JPJqj7fDJ" class="product-cta" target="_blank" rel="noopener">Comprar este kit</a>
+      </div>
+      <div class="product">
+        <span class="product-num">02</span>
+        <h3>Kit Liquidación de Sueldo</h3>
+        <p class="product-desc">Para calcular el sueldo líquido correcto sin dolores de cabeza. Escribes el sueldo base y la planilla hace todo el resto, con las tasas chilenas ya cargadas.</p>
+        <ul class="product-list">
+          <li>Planilla que calcula AFP, salud, AFC, impuesto único y más, automáticamente</li>
+          <li>Liquidación lista para imprimir y que el trabajador firme cada mes</li>
+          <li>Tasas y topes 2026 + guía paso a paso para pagar en Previred</li>
+        </ul>
+        <div class="product-format">1 archivo Excel · 4 pestañas</div>
+        <div class="product-price"><strong>$35.990</strong><span>CLP</span></div>
+        <a href="https://www.flow.cl/uri/MbFN3Gyhk" class="product-cta" target="_blank" rel="noopener">Comprar este kit</a>
+      </div>
+      <div class="product">
+        <span class="product-num">03</span>
+        <h3>Kit Contratos de Trabajo</h3>
+        <p class="product-desc">Para contratar con respaldo legal sin pagar un abogado por cada contrato. Modelos basados en la ley chilena, con explicaciones simples de cada cláusula.</p>
+        <ul class="product-list">
+          <li>4 modelos: indefinido, plazo fijo, obra o faena y turno minería/construcción</li>
+          <li>Cada cláusula explicada: qué significa y en qué ley se basa</li>
+          <li>Un contrato de ejemplo ya completo, listo para imprimir como guía</li>
+        </ul>
+        <div class="product-format">2 archivos Word</div>
+        <div class="product-price"><strong>$45.990</strong><span>CLP</span></div>
+        <a href="https://www.flow.cl/uri/dw0Batc5T" class="product-cta" target="_blank" rel="noopener">Comprar este kit</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="how">
+  <div class="container">
+    <div style="text-align:center;max-width:680px;margin:0 auto">
+      <div class="label">El proceso</div>
+      <h2 class="section-title">Tres pasos. <em>Sin vueltas.</em></h2>
+    </div>
+    <div class="how-grid">
+      <div class="step"><div class="step-num">i.</div><h4>Eliges tu kit</h4><p>Seleccionas el kit que necesitas o el pack completo y haces clic en comprar. Sin formularios eternos ni llamadas de venta.</p></div>
+      <div class="step"><div class="step-num">ii.</div><h4>Pagas seguro</h4><p>Pagas con el medio que prefieras: WebPay, débito, crédito, Khipu, BCI, Etpay o Mach. Pago único, sin suscripciones.</p></div>
+      <div class="step"><div class="step-num">iii.</div><h4>Recibes todo</h4><p>Te llegan los archivos a tu correo para descargarlos. Los abres, los completas con tus datos y son tuyos para siempre.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="faq">
+  <div class="container">
+    <div style="text-align:center;max-width:680px;margin:0 auto">
+      <div class="label">Preguntas</div>
+      <h2 class="section-title">Lo que más nos <em>preguntan.</em></h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item"><div class="faq-q">¿Cómo recibo los archivos después de pagar?</div><div class="faq-a">Apenas confirmas el pago, recibes los archivos en el correo que registraste en la compra. Si tienes algún problema para descargarlos, nos escribes y lo resolvemos al toque.</div></div>
+      <div class="faq-item"><div class="faq-q">¿Necesito saber Excel o Word avanzado para usarlos?</div><div class="faq-a">No. Cada archivo viene con instrucciones paso a paso. La planilla Excel tiene menús desplegables y notas explicativas en cada campo. Los contratos tienen guía con explicaciones legales.</div></div>
+      <div class="faq-item"><div class="faq-q">¿Las tasas y normativa están al día?</div><div class="faq-a">Sí. Todo está actualizado a 2026: comisiones AFP, SIS (1,88% / 1,41%), reforma previsional (1% empleador desde agosto 2025), tope imponible 90 UF, Ley 21.561 de 40 horas y Ley 21.122 de contratos por obra y faena.</div></div>
+      <div class="faq-item"><div class="faq-q">¿Puedo usar los documentos en más de una empresa?</div><div class="faq-a">Sí. Una vez los compras son tuyos. Si eres consultor o llevas varias empresas, los puedes usar para todos tus clientes y duplicar las plantillas todas las veces que necesites.</div></div>
+      <div class="faq-item"><div class="faq-q">¿Los contratos los puedo usar sin abogado?</div><div class="faq-a">Los contratos son una guía: modelos basados en el Código del Trabajo vigente que puedes tomar como ejemplo para crear tu propio contrato laboral. Para casos estándar funcionan tal cual. Dicho esto, siempre es bueno contar con un abogado laboral para estos casos, sobre todo en situaciones complejas. Y si no tienes acceso a uno, antes de firmar puedes consultar tu contrato directamente en la Dirección del Trabajo (dt.gob.cl) — ese trámite es gratuito y te da total tranquilidad.</div></div>
+      <div class="faq-item"><div class="faq-q">¿Qué pasa si cambia la ley o las tasas?</div><div class="faq-a">La planilla Excel tiene una pestaña de parámetros legales que puedes actualizar tú mismo cuando cambian las tasas (es muy simple). Los contratos están basados en leyes que no cambian con frecuencia.</div></div>
+      <div class="faq-item"><div class="faq-q">¿Hay devoluciones?</div><div class="faq-a">Al ser productos digitales descargables, una vez entregado el archivo no aplican devoluciones. Si tienes dudas antes de comprar, escríbenos por WhatsApp y te respondemos todo lo que necesites.</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="final">
+  <div class="container">
+    <h2>Deja de improvisar.<br><em>Ordena tu RRHH hoy.</em></h2>
+    <p>Pago único · Sin suscripción · Descarga inmediata</p>
+    <a href="https://www.flow.cl/uri/M0H2t1mC4" class="btn-gold" target="_blank" rel="noopener">Llevar el pack completo · $87.990 CLP →</a>
+  </div>
+</section>
+
+<footer>© 2026 KitLaboral · Hecho en Chile · <a href="#">Términos de uso</a></footer>
+
+<a href="https://wa.me/56912345678?text=Hola%2C%20tengo%20una%20duda%20antes%20de%20comprar" class="wa" title="¿Dudas? Escríbenos">💬</a>
+
+<script>
+  document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',e=>{const t=document.querySelector(a.getAttribute('href'));if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'})}})});
+  const io=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='translateY(0)'}})},{threshold:.1});
+  document.querySelectorAll('.pain,.product,.step,.faq-item').forEach(el=>{el.style.opacity='0';el.style.transform='translateY(16px)';el.style.transition='opacity .6s ease, transform .6s ease';io.observe(el)});
+</script>
+</body>
+</html>
