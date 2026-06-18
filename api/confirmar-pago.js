@@ -29,18 +29,10 @@ function firmar(params) {
   return crypto.createHmac('sha256', process.env.FLOW_SECRET_KEY).update(str).digest('hex');
 }
 
-function verificarFirma(body) {
-  const { s, ...resto } = body;
-  return s && crypto.timingSafeEqual(
-    Buffer.from(s),
-    Buffer.from(firmar(resto))
-  );
-}
-
 // ── Llamada GET a la API de Flow ────────────────────────────────────────────
 function flowGet(path, params) {
   return new Promise((resolve, reject) => {
-    params.sign = firmar(params);
+    params.s = firmar(params);
     const req = https.request(
       {
         hostname: 'www.flow.cl',
@@ -101,24 +93,20 @@ module.exports = async function handler(req, res) {
     return res.status(405).send('Método no permitido');
   }
 
-  const body = req.body;
-
-  // 1. Verificar firma — rechazar si no viene de Flow
-  if (!verificarFirma(body)) {
-    console.error('Firma inválida recibida:', body);
-    return res.status(401).send('Firma inválida');
+  const token = req.body && req.body.token;
+  if (!token) {
+    return res.status(400).send('Falta token');
   }
 
-  const { token } = body;
-
   try {
-    // 2. Consultar estado del pago
+    // 1. Consultar el estado real del pago en Flow (autenticado con nuestras
+    //    credenciales — es la fuente de verdad y valida que el aviso es legítimo)
     const pago = await flowGet('/payment/getStatus', {
       apiKey: process.env.FLOW_API_KEY,
       token,
     });
 
-    // 3. Solo procesar si el pago está confirmado (status 2)
+    // 2. Solo procesar si el pago está confirmado (status 2)
     if (pago.status !== 2) {
       return res.status(200).send('OK');
     }

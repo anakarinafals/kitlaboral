@@ -16,7 +16,7 @@ function firmar(params) {
 
 function flowPost(path, params) {
   return new Promise((resolve, reject) => {
-    params.sign = firmar(params);
+    params.s = firmar(params);
     const body = querystring.stringify(params);
     const req = https.request(
       {
@@ -49,6 +49,11 @@ module.exports = async function handler(req, res) {
     return res.status(400).send('Producto no válido');
   }
 
+  const email = (req.query.email || '').trim();
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    return res.status(400).send('Email no válido');
+  }
+
   const base = `https://${req.headers.host}`;
 
   try {
@@ -58,7 +63,8 @@ module.exports = async function handler(req, res) {
       subject:         producto.subject,
       amount:          producto.amount,
       currency:        'CLP',
-      urlConfirmacion: `${base}/api/confirmar-pago`,
+      email,
+      urlConfirmation: `${base}/api/confirmar-pago`,
       urlReturn:       `${base}/gracias.html`,
     });
 

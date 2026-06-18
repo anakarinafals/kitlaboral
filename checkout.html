@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Finalizar compra — KitLaboral</title>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-MMNZ4TFG');</script>
+<!-- End Google Tag Manager -->
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink:      #0A0E1A;
+    --ink-soft: #2A3142;
+    --paper:    #FAF8F3;
+    --cream:    #F2EFE6;
+    --line:     #E8E3D7;
+    --accent:   #1A4A8A;
+    --gold:     #C9A961;
+    --muted:    #6B6F7A;
+    --green:    #4A7C59;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Inter',sans-serif;background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:1.5rem}
+  .serif{font-family:'Instrument Serif',serif;font-weight:400}
+  .card{width:100%;max-width:440px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:2.5rem;box-shadow:0 12px 40px rgba(10,14,26,.06)}
+  .logo{font-size:1rem;font-weight:600;text-align:center;margin-bottom:2rem}
+  .logo span{color:var(--accent);font-style:italic;font-family:'Instrument Serif',serif}
+  .resumen{background:var(--cream);border-radius:12px;padding:1.25rem 1.5rem;margin-bottom:1.75rem}
+  .resumen-label{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:500;margin-bottom:.4rem}
+  .resumen-nombre{font-size:1.15rem;font-weight:600}
+  .resumen-precio{font-size:1.6rem;font-weight:700;margin-top:.5rem}
+  .resumen-precio span{font-size:.9rem;font-weight:400;color:var(--muted)}
+  label{display:block;font-size:.85rem;font-weight:500;margin-bottom:.5rem}
+  input{width:100%;padding:.9rem 1rem;font-size:1rem;font-family:inherit;border:1px solid var(--line);border-radius:10px;background:var(--paper);transition:border-color .2s}
+  input:focus{outline:none;border-color:var(--accent)}
+  .ayuda{font-size:.8rem;color:var(--muted);margin-top:.5rem;line-height:1.5}
+  .btn{width:100%;margin-top:1.5rem;background:var(--ink);color:var(--paper);border:none;border-radius:100px;padding:1rem;font-size:1rem;font-weight:500;cursor:pointer;font-family:inherit;transition:all .2s}
+  .btn:hover{background:var(--accent)}
+  .btn:disabled{opacity:.5;cursor:not-allowed}
+  .error{color:#B42318;font-size:.85rem;margin-top:.75rem;display:none}
+  .seguro{text-align:center;font-size:.78rem;color:var(--muted);margin-top:1.5rem}
+  .seguro::before{content:'🔒 ';}
+  .volver{display:block;text-align:center;margin-top:1.25rem;font-size:.82rem;color:var(--muted);text-decoration:none}
+  .volver:hover{color:var(--ink)}
+</style>
+</head>
+<body>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MMNZ4TFG" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+<div class="card">
+  <div class="logo">Kit<span>Laboral</span></div>
+
+  <div class="resumen">
+    <div class="resumen-label">Tu compra</div>
+    <div class="resumen-nombre" id="nombre">—</div>
+    <div class="resumen-precio" id="precio"></div>
+  </div>
+
+  <form id="form">
+    <label for="email">Tu correo electrónico</label>
+    <input type="email" id="email" name="email" placeholder="tucorreo@gmail.com" required autocomplete="email">
+    <p class="ayuda">Enviaremos los archivos a este correo apenas confirmes el pago. Revisa que esté bien escrito.</p>
+    <div class="error" id="error"></div>
+    <button type="submit" class="btn" id="btn">Ir a pagar con Flow →</button>
+  </form>
+
+  <p class="seguro">Pago seguro procesado por Flow</p>
+  <a href="/" class="volver">← Volver</a>
+</div>
+
+<script>
+  const PRODUCTOS = {
+    'pack-completo':   { nombre: 'Pack Completo',              precio: 15990 },
+    'kit-onboarding':  { nombre: 'Kit Onboarding',            precio: 6990  },
+    'kit-liquidacion': { nombre: 'Kit Liquidación de Sueldo', precio: 8990  },
+    'kit-contratos':   { nombre: 'Kit Contratos de Trabajo',  precio: 9990  },
+  };
+
+  const params = new URLSearchParams(location.search);
+  const id = params.get('producto');
+  const producto = PRODUCTOS[id];
+
+  if (!producto) {
+    location.href = '/';
+  } else {
+    document.getElementById('nombre').textContent = producto.nombre;
+    document.getElementById('precio').innerHTML =
+      '$' + producto.precio.toLocaleString('es-CL') + ' <span>CLP</span>';
+  }
+
+  const form = document.getElementById('form');
+  const btn = document.getElementById('btn');
+  const errorEl = document.getElementById('error');
+
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const email = document.getElementById('email').value.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      errorEl.textContent = 'Ingresa un correo válido.';
+      errorEl.style.display = 'block';
+      return;
+    }
+    errorEl.style.display = 'none';
+    btn.disabled = true;
+    btn.textContent = 'Redirigiendo...';
+    dataLayer.push({ event: 'inicio_pago', producto: id });
+    location.href = '/api/crear-pago?producto=' + encodeURIComponent(id) +
+                    '&email=' + encodeURIComponent(email);
+  });
+</script>
+</body>
+</html>
