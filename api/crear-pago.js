@@ -11,10 +11,8 @@ const PRODUCTOS = {
 
 // Cupones de descuento. montoFijo = deja el producto en ese precio.
 // porcentaje = descuenta ese % del precio original.
-// OJO: "PRUEBA" es un cupón de testeo — eliminar después de probar.
-const CUPONES = {
-  PRUEBA: { montoFijo: 1000 },
-};
+// Para agregar uno: ej. LANZAMIENTO: { porcentaje: 20 }
+const CUPONES = {};
 
 function firmar(params) {
   const str = Object.keys(params).sort().map(k => k + params[k]).join('');

@@ -39,17 +39,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   input{width:100%;padding:.9rem 1rem;font-size:1rem;font-family:inherit;border:1px solid var(--line);border-radius:10px;background:var(--paper);transition:border-color .2s}
   input:focus{outline:none;border-color:var(--accent)}
   .ayuda{font-size:.8rem;color:var(--muted);margin-top:.5rem;line-height:1.5}
-  .resumen-original{font-size:.95rem;color:var(--muted);text-decoration:line-through;font-weight:400;margin-right:.5rem}
-  .resumen-cupon{font-size:.8rem;color:var(--green);font-weight:500;margin-top:.4rem;display:none}
-  .cupon-toggle{display:inline-block;margin-top:1.25rem;font-size:.85rem;color:var(--accent);background:none;border:none;cursor:pointer;font-family:inherit;padding:0;text-decoration:underline}
-  .cupon-box{display:none;margin-top:.75rem;gap:.5rem}
-  .cupon-box.abierto{display:flex}
-  .cupon-box input{text-transform:uppercase}
-  .cupon-aplicar{flex-shrink:0;padding:0 1.1rem;background:var(--ink);color:var(--paper);border:none;border-radius:10px;font-family:inherit;font-size:.85rem;font-weight:500;cursor:pointer}
-  .cupon-aplicar:hover{background:var(--accent)}
-  .cupon-msg{font-size:.8rem;margin-top:.5rem;display:none}
-  .cupon-msg.ok{color:var(--green);display:block}
-  .cupon-msg.bad{color:#B42318;display:block}
   .btn{width:100%;margin-top:1.5rem;background:var(--ink);color:var(--paper);border:none;border-radius:100px;padding:1rem;font-size:1rem;font-weight:500;cursor:pointer;font-family:inherit;transition:all .2s}
   .btn:hover{background:var(--accent)}
   .btn:disabled{opacity:.5;cursor:not-allowed}
@@ -70,21 +59,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <div class="resumen-label">Tu compra</div>
     <div class="resumen-nombre" id="nombre">—</div>
     <div class="resumen-precio" id="precio"></div>
-    <div class="resumen-cupon" id="resumenCupon"></div>
   </div>
 
   <form id="form">
     <label for="email">Tu correo electrónico</label>
     <input type="email" id="email" name="email" placeholder="tucorreo@gmail.com" required autocomplete="email">
     <p class="ayuda">Enviaremos los archivos a este correo apenas confirmes el pago. Revisa que esté bien escrito.</p>
-
-    <button type="button" class="cupon-toggle" id="cuponToggle">¿Tienes un cupón de descuento?</button>
-    <div class="cupon-box" id="cuponBox">
-      <input type="text" id="cupon" placeholder="Código" autocomplete="off">
-      <button type="button" class="cupon-aplicar" id="cuponAplicar">Aplicar</button>
-    </div>
-    <div class="cupon-msg" id="cuponMsg"></div>
-
     <div class="error" id="error"></div>
     <button type="submit" class="btn" id="btn">Ir a pagar con Flow →</button>
   </form>
@@ -101,12 +81,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     'kit-contratos':   { nombre: 'Kit Contratos de Trabajo',  precio: 9990  },
   };
 
-  // Solo para mostrar el precio con descuento. El cálculo real y seguro
-  // se hace en el servidor (api/crear-pago.js).
-  const CUPONES = {
-    PRUEBA: { montoFijo: 1000 },
-  };
-
   const params = new URLSearchParams(location.search);
   const id = params.get('producto');
   const producto = PRODUCTOS[id];
@@ -117,54 +91,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     location.href = '/';
   } else {
     document.getElementById('nombre').textContent = producto.nombre;
-    pintarPrecio(producto.precio);
+    document.getElementById('precio').innerHTML = fmt(producto.precio) + ' <span>CLP</span>';
   }
-
-  function pintarPrecio(valor, original) {
-    const precioEl = document.getElementById('precio');
-    if (original && original !== valor) {
-      precioEl.innerHTML = '<span class="resumen-original">' + fmt(original) +
-        '</span>' + fmt(valor) + ' <span>CLP</span>';
-    } else {
-      precioEl.innerHTML = fmt(valor) + ' <span>CLP</span>';
-    }
-  }
-
-  let cuponAplicado = '';
-
-  const cuponToggle = document.getElementById('cuponToggle');
-  const cuponBox = document.getElementById('cuponBox');
-  const cuponInput = document.getElementById('cupon');
-  const cuponAplicarBtn = document.getElementById('cuponAplicar');
-  const cuponMsg = document.getElementById('cuponMsg');
-  const resumenCupon = document.getElementById('resumenCupon');
-
-  cuponToggle.addEventListener('click', () => {
-    cuponBox.classList.toggle('abierto');
-    if (cuponBox.classList.contains('abierto')) cuponInput.focus();
-  });
-
-  cuponAplicarBtn.addEventListener('click', () => {
-    const code = cuponInput.value.trim().toUpperCase();
-    const desc = CUPONES[code];
-    if (!desc) {
-      cuponMsg.className = 'cupon-msg bad';
-      cuponMsg.textContent = 'Cupón no válido.';
-      cuponAplicado = '';
-      pintarPrecio(producto.precio);
-      resumenCupon.style.display = 'none';
-      return;
-    }
-    const nuevo = desc.montoFijo != null
-      ? desc.montoFijo
-      : Math.round(producto.precio * (100 - desc.porcentaje) / 100);
-    cuponAplicado = code;
-    pintarPrecio(nuevo, producto.precio);
-    cuponMsg.className = 'cupon-msg ok';
-    cuponMsg.textContent = '¡Cupón aplicado!';
-    resumenCupon.style.display = 'block';
-    resumenCupon.textContent = '✓ Cupón ' + code + ' aplicado';
-  });
 
   const form = document.getElementById('form');
   const btn = document.getElementById('btn');
@@ -181,11 +109,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     errorEl.style.display = 'none';
     btn.disabled = true;
     btn.textContent = 'Redirigiendo...';
-    dataLayer.push({ event: 'inicio_pago', producto: id, cupon: cuponAplicado });
-    let url = '/api/crear-pago?producto=' + encodeURIComponent(id) +
-              '&email=' + encodeURIComponent(email);
-    if (cuponAplicado) url += '&cupon=' + encodeURIComponent(cuponAplicado);
-    location.href = url;
+    dataLayer.push({ event: 'inicio_pago', producto: id });
+    location.href = '/api/crear-pago?producto=' + encodeURIComponent(id) +
+                    '&email=' + encodeURIComponent(email);
   });
 </script>
 </body>
