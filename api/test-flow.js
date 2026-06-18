@@ -21,7 +21,7 @@ module.exports = async function handler(req, res) {
     subject:         'Test KitLaboral',
     amount:          1000,
     currency:        'CLP',
-    urlConfirmacion: 'https://kitlaboral.cl/api/confirmar-pago',
+    urlConfirmation: 'https://kitlaboral.cl/api/confirmar-pago',
     urlReturn:       'https://kitlaboral.cl/gracias.html',
   };
 
