@@ -30,42 +30,44 @@ module.exports = async function handler(req, res) {
 
   const body = querystring.stringify(params);
 
-  const result = await new Promise(resolve => {
-    const req2 = https.request(
-      {
-        hostname: 'www.flow.cl',
-        path: '/api/payment/create',
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-          'Content-Length': Buffer.byteLength(body),
+  function callFlow(hostname) {
+    return new Promise(resolve => {
+      const req2 = https.request(
+        {
+          hostname,
+          path: '/api/payment/create',
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Content-Length': Buffer.byteLength(body),
+          },
         },
-      },
-      r => {
-        let data = '';
-        r.on('data', c => (data += c));
-        r.on('end', () => resolve({ status: r.statusCode, body: data }));
-      }
-    );
-    req2.on('error', e => resolve({ status: 0, body: e.message }));
-    req2.write(body);
-    req2.end();
-  });
+        r => {
+          let data = '';
+          r.on('data', c => (data += c));
+          r.on('end', () => {
+            try { resolve({ status: r.statusCode, body: JSON.parse(data) }); }
+            catch { resolve({ status: r.statusCode, body: data }); }
+          });
+        }
+      );
+      req2.on('error', e => resolve({ status: 0, body: e.message }));
+      req2.write(body);
+      req2.end();
+    });
+  }
 
-  let flowResponse;
-  try { flowResponse = JSON.parse(result.body); }
-  catch { flowResponse = result.body; }
+  const [prod, sandbox] = await Promise.all([
+    callFlow('www.flow.cl'),
+    callFlow('sandbox.flow.cl'),
+  ]);
 
   return res.status(200).json({
-    ok: result.status === 200 && flowResponse.url,
-    httpStatus: result.status,
-    flowResponse,
     apiKeyLen: API_KEY.length,
     secretKeyLen: SECRET_KEY.length,
-    apiKeyPreview: API_KEY.slice(0, 8) + '...',
-    secretKeyPreview: SECRET_KEY.slice(0, 6) + '...',
     apiKeyHasWhitespace: /\s/.test(API_KEY),
     secretKeyHasWhitespace: /\s/.test(SECRET_KEY),
-    stringToSign: str.slice(0, 80) + (str.length > 80 ? '...' : ''),
+    produccion: { httpStatus: prod.status, flowResponse: prod.body },
+    sandbox:    { httpStatus: sandbox.status, flowResponse: sandbox.body },
   });
 };
