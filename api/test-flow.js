@@ -15,9 +15,18 @@ module.exports = async function handler(req, res) {
     });
   }
 
-  const params = { apiKey: API_KEY };
-  const cadena = Object.keys(params).sort().map(k => k + params[k]).join('');
-  params.sign = crypto.createHmac('sha256', SECRET_KEY).update(cadena).digest('hex');
+  const params = {
+    apiKey:          API_KEY,
+    commerceOrder:   `TEST-${Date.now()}`,
+    subject:         'Test KitLaboral',
+    amount:          1000,
+    currency:        'CLP',
+    urlConfirmacion: 'https://kitlaboral.cl/api/confirmar-pago',
+    urlReturn:       'https://kitlaboral.cl/gracias.html',
+  };
+
+  const str = Object.keys(params).sort().map(k => k + params[k]).join('');
+  params.sign = crypto.createHmac('sha256', SECRET_KEY).update(str).digest('hex');
 
   const body = querystring.stringify(params);
 
@@ -25,7 +34,7 @@ module.exports = async function handler(req, res) {
     const req2 = https.request(
       {
         hostname: 'www.flow.cl',
-        path: '/api/merchant/get',
+        path: '/api/payment/create',
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
@@ -43,10 +52,14 @@ module.exports = async function handler(req, res) {
     req2.end();
   });
 
+  let flowResponse;
+  try { flowResponse = JSON.parse(result.body); }
+  catch { flowResponse = result.body; }
+
   return res.status(200).json({
-    ok: result.status === 200,
+    ok: result.status === 200 && flowResponse.url,
     httpStatus: result.status,
-    flowResponse: JSON.parse(result.body),
+    flowResponse,
     apiKeyPreview: API_KEY.slice(0, 8) + '...',
     secretKeyPreview: SECRET_KEY.slice(0, 6) + '...',
   });

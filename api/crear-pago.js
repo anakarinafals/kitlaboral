@@ -54,6 +54,7 @@ module.exports = async function handler(req, res) {
   try {
     const pago = await flowPost('/payment/create', {
       apiKey:          process.env.FLOW_API_KEY,
+      commerceOrder:   `KL-${Date.now()}`,
       subject:         producto.subject,
       amount:          producto.amount,
       currency:        'CLP',
