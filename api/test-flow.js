@@ -60,7 +60,12 @@ module.exports = async function handler(req, res) {
     ok: result.status === 200 && flowResponse.url,
     httpStatus: result.status,
     flowResponse,
+    apiKeyLen: API_KEY.length,
+    secretKeyLen: SECRET_KEY.length,
     apiKeyPreview: API_KEY.slice(0, 8) + '...',
     secretKeyPreview: SECRET_KEY.slice(0, 6) + '...',
+    apiKeyHasWhitespace: /\s/.test(API_KEY),
+    secretKeyHasWhitespace: /\s/.test(SECRET_KEY),
+    stringToSign: str.slice(0, 80) + (str.length > 80 ? '...' : ''),
   });
 };
