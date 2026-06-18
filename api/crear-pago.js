@@ -9,6 +9,13 @@ const PRODUCTOS = {
   'kit-contratos':   { subject: 'Kit Contratos de Trabajo', amount: 9990  },
 };
 
+// Cupones de descuento. montoFijo = deja el producto en ese precio.
+// porcentaje = descuenta ese % del precio original.
+// OJO: "PRUEBA" es un cupón de testeo — eliminar después de probar.
+const CUPONES = {
+  PRUEBA: { montoFijo: 1000 },
+};
+
 function firmar(params) {
   const str = Object.keys(params).sort().map(k => k + params[k]).join('');
   return crypto.createHmac('sha256', process.env.FLOW_SECRET_KEY).update(str).digest('hex');
@@ -54,6 +61,19 @@ module.exports = async function handler(req, res) {
     return res.status(400).send('Email no válido');
   }
 
+  // Aplicar cupón si viene uno (el monto se calcula acá en el servidor, seguro)
+  let amount = producto.amount;
+  const cupon = (req.query.cupon || '').trim().toUpperCase();
+  if (cupon) {
+    const desc = CUPONES[cupon];
+    if (!desc) {
+      return res.status(400).send('Cupón no válido');
+    }
+    amount = desc.montoFijo != null
+      ? desc.montoFijo
+      : Math.round(producto.amount * (100 - desc.porcentaje) / 100);
+  }
+
   const base = `https://${req.headers.host}`;
 
   try {
@@ -61,7 +81,7 @@ module.exports = async function handler(req, res) {
       apiKey:          process.env.FLOW_API_KEY,
       commerceOrder:   `KL-${Date.now()}`,
       subject:         producto.subject,
-      amount:          producto.amount,
+      amount,
       currency:        'CLP',
       email,
       urlConfirmation: `${base}/api/confirmar-pago`,
