@@ -26,15 +26,21 @@ module.exports = async function handler(req, res) {
   };
 
   const str = Object.keys(params).sort().map(k => k + params[k]).join('');
-  params.sign = crypto.createHmac('sha256', SECRET_KEY).update(str).digest('hex');
 
-  const body = querystring.stringify(params);
+  const isValidHex = /^[0-9a-fA-F]+$/.test(SECRET_KEY) && SECRET_KEY.length % 2 === 0;
 
-  function callFlow(hostname) {
+  function makeBody(useHexKey) {
+    const p = { ...params };
+    const key = useHexKey ? Buffer.from(SECRET_KEY, 'hex') : SECRET_KEY;
+    p.sign = crypto.createHmac('sha256', key).update(str).digest('hex');
+    return querystring.stringify(p);
+  }
+
+  function callFlow(body) {
     return new Promise(resolve => {
       const req2 = https.request(
         {
-          hostname,
+          hostname: 'www.flow.cl',
           path: '/api/payment/create',
           method: 'POST',
           headers: {
@@ -57,17 +63,14 @@ module.exports = async function handler(req, res) {
     });
   }
 
-  const [prod, sandbox] = await Promise.all([
-    callFlow('www.flow.cl'),
-    callFlow('sandbox.flow.cl'),
+  const [stringKey, hexKey] = await Promise.all([
+    callFlow(makeBody(false)),
+    isValidHex ? callFlow(makeBody(true)) : Promise.resolve({ status: 0, body: 'no es hex válido' }),
   ]);
 
   return res.status(200).json({
-    apiKeyLen: API_KEY.length,
-    secretKeyLen: SECRET_KEY.length,
-    apiKeyHasWhitespace: /\s/.test(API_KEY),
-    secretKeyHasWhitespace: /\s/.test(SECRET_KEY),
-    produccion: { httpStatus: prod.status, flowResponse: prod.body },
-    sandbox:    { httpStatus: sandbox.status, flowResponse: sandbox.body },
+    secretKeyIsValidHex: isValidHex,
+    conClaveString: { httpStatus: stringKey.status, flowResponse: stringKey.body },
+    conClaveHex:    { httpStatus: hexKey.status,    flowResponse: hexKey.body },
   });
 };
