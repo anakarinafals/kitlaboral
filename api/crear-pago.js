@@ -85,7 +85,7 @@ module.exports = async function handler(req, res) {
       currency:        'CLP',
       email,
       urlConfirmation: `${base}/api/confirmar-pago`,
-      urlReturn:       `${base}/gracias.html`,
+      urlReturn:       `${base}/api/retorno`,
     });
 
     if (pago.url && pago.token) {
