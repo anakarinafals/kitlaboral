@@ -29,10 +29,10 @@ module.exports = async function handler(req, res) {
 
   const isValidHex = /^[0-9a-fA-F]+$/.test(SECRET_KEY) && SECRET_KEY.length % 2 === 0;
 
-  function makeBody(useHexKey) {
+  function makeBody(useS) {
     const p = { ...params };
-    const key = useHexKey ? Buffer.from(SECRET_KEY, 'hex') : SECRET_KEY;
-    p.sign = crypto.createHmac('sha256', key).update(str).digest('hex');
+    const sig = crypto.createHmac('sha256', SECRET_KEY).update(str).digest('hex');
+    if (useS) p.s = sig; else p.sign = sig;
     return querystring.stringify(p);
   }
 
@@ -63,14 +63,13 @@ module.exports = async function handler(req, res) {
     });
   }
 
-  const [stringKey, hexKey] = await Promise.all([
+  const [conSign, conS] = await Promise.all([
     callFlow(makeBody(false)),
-    isValidHex ? callFlow(makeBody(true)) : Promise.resolve({ status: 0, body: 'no es hex válido' }),
+    callFlow(makeBody(true)),
   ]);
 
   return res.status(200).json({
-    secretKeyIsValidHex: isValidHex,
-    conClaveString: { httpStatus: stringKey.status, flowResponse: stringKey.body },
-    conClaveHex:    { httpStatus: hexKey.status,    flowResponse: hexKey.body },
+    conSign: { httpStatus: conSign.status, flowResponse: conSign.body },
+    conS:    { httpStatus: conS.status,    flowResponse: conS.body },
   });
 };
