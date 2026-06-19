@@ -7,6 +7,7 @@ const PRODUCTOS = {
   'kit-onboarding':  { subject: 'Kit Onboarding',           amount: 6990  },
   'kit-liquidacion': { subject: 'Kit Liquidacion de Sueldo', amount: 8990  },
   'kit-contratos':   { subject: 'Kit Contratos de Trabajo', amount: 9990  },
+  'kit-vacaciones':  { subject: 'Control de Vacaciones y Ausencias', amount: 9990 },
 };
 
 // Cupones de descuento. montoFijo = deja el producto en ese precio.

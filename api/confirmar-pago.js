@@ -16,11 +16,15 @@ const ARCHIVOS = {
     { nombre: 'Kit Contratos de Trabajo (Documento 1)', url: 'https://docs.google.com/document/d/1GTiwdNjSaq2VCOhYJzK6hQJM8e_Su1WgxkeNh4BmoEo/export?format=pdf' },
     { nombre: 'Kit Contratos de Trabajo (Documento 2)', url: 'https://docs.google.com/document/d/1LXzc4QqGlxChvL5QeME4aJ39zeyy6ytOxo1wG2BeHSk/export?format=pdf' },
   ],
+  'Control de Vacaciones y Ausencias': [
+    { nombre: 'Control de Vacaciones y Ausencias', url: 'https://docs.google.com/spreadsheets/d/1ijg79j9xNol5L0e65LM-yAyVSCpbmv_zd8hoH8FPCpE/export?format=xlsx' },
+  ],
 };
 ARCHIVOS['Pack Completo'] = [
   ...ARCHIVOS['Kit Onboarding'],
   ...ARCHIVOS['Kit Liquidacion de Sueldo'],
   ...ARCHIVOS['Kit Contratos de Trabajo'],
+  ...ARCHIVOS['Control de Vacaciones y Ausencias'],
 ];
 
 // ── Firma HMAC-SHA256 ───────────────────────────────────────────────────────
