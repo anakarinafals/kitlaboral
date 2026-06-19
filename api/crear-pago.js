@@ -3,7 +3,7 @@ const https = require('https');
 const querystring = require('querystring');
 
 const PRODUCTOS = {
-  'pack-completo':    { subject: 'Pack Completo',            amount: 15990 },
+  'pack-completo':    { subject: 'Pack Completo',            amount: 19990 },
   'kit-onboarding':  { subject: 'Kit Onboarding',           amount: 6990  },
   'kit-liquidacion': { subject: 'Kit Liquidacion de Sueldo', amount: 8990  },
   'kit-contratos':   { subject: 'Kit Contratos de Trabajo', amount: 9990  },
