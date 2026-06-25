@@ -4,6 +4,24 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>¡Pago confirmado! — KitLaboral</title>
+<!-- dataLayer de conversión: se empuja ANTES de GTM para que el evento ya esté
+     en la cola cuando GTM inicializa y dispare la conversión "Pago confirmado".
+     transaction_id (commerceOrder) y value llegan por URL desde /api/retorno,
+     que ya los verificó contra Flow. -->
+<script>
+  window.dataLayer = window.dataLayer || [];
+  (function () {
+    var p = new URLSearchParams(location.search);
+    var txId = p.get('transaction_id');
+    if (!txId) return; // sin datos verificados, no emitimos conversión
+    window.dataLayer.push({
+      event: 'pago_confirmado',
+      transaction_id: txId,
+      value: Number(p.get('value')) || 0,
+      currency: p.get('currency') || 'CLP'
+    });
+  })();
+</script>
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
