@@ -6,6 +6,7 @@ const PRODUCTOS = {
   'pack-completo':      { subject: 'Pack Completo',                     amount: 25990 },
   'pack-contratacion':  { subject: 'Pack Contratacion',                 amount: 20990 },
   'pack-sueldos':       { subject: 'Pack Sueldos y Personal',           amount: 15990 },
+  'pack-inicio-pro':    { subject: 'Pack Inicio Pro',                   amount: 20990 },
   'kit-onboarding':     { subject: 'Kit Onboarding',                    amount: 7990  },
   'kit-liquidacion':    { subject: 'Kit Liquidacion de Sueldo',         amount: 9990  },
   'kit-contratos':      { subject: 'Kit Contratos de Trabajo',          amount: 10990 },
