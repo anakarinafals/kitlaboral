@@ -3,11 +3,14 @@ const https = require('https');
 const querystring = require('querystring');
 
 const PRODUCTOS = {
-  'pack-completo':    { subject: 'Pack Completo',            amount: 19990 },
-  'kit-onboarding':  { subject: 'Kit Onboarding',           amount: 6990  },
-  'kit-liquidacion': { subject: 'Kit Liquidacion de Sueldo', amount: 8990  },
-  'kit-contratos':   { subject: 'Kit Contratos de Trabajo', amount: 9990  },
-  'kit-vacaciones':  { subject: 'Control de Vacaciones y Ausencias', amount: 9990 },
+  'pack-completo':      { subject: 'Pack Completo',                     amount: 25990 },
+  'pack-contratacion':  { subject: 'Pack Contratacion',                 amount: 20990 },
+  'pack-sueldos':       { subject: 'Pack Sueldos y Personal',           amount: 15990 },
+  'kit-onboarding':     { subject: 'Kit Onboarding',                    amount: 7990  },
+  'kit-liquidacion':    { subject: 'Kit Liquidacion de Sueldo',         amount: 9990  },
+  'kit-contratos':      { subject: 'Kit Contratos de Trabajo',          amount: 10990 },
+  'kit-vacaciones':     { subject: 'Control de Vacaciones y Ausencias', amount: 10990 },
+  'kit-reclutamiento':  { subject: 'Kit Reclutamiento y Seleccion',     amount: 10990 },
 };
 
 // Cupones de descuento. montoFijo = deja el producto en ese precio.

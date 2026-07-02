@@ -19,11 +19,30 @@ const ARCHIVOS = {
   'Control de Vacaciones y Ausencias': [
     { nombre: 'Control de Vacaciones y Ausencias', url: 'https://docs.google.com/spreadsheets/d/1ijg79j9xNol5L0e65LM-yAyVSCpbmv_zd8hoH8FPCpE/export?format=xlsx' },
   ],
+  // Archivos .docx/.xlsx subidos directo a Drive (no convertidos a Google Docs),
+  // por eso el link de descarga usa uc?export=download en vez de export?format=
+  'Kit Reclutamiento y Seleccion': [
+    { nombre: 'Kit Reclutamiento — 1. Definir y Publicar el Cargo', url: 'https://drive.google.com/uc?export=download&id=1J5vw-xjhP3xkVjblwLbrW9wfyl234zvR' },
+    { nombre: 'Kit Reclutamiento — 2. Entrevistar y Cerrar', url: 'https://drive.google.com/uc?export=download&id=1Uax8BA1fbmk8DnCMRsPHB62bJiQBlaxZ' },
+    { nombre: 'Kit Reclutamiento — 3. Matriz Comparadora de Candidatos', url: 'https://drive.google.com/uc?export=download&id=1Tb8gNQtgChhIeaVLkYFBq1JEGJ_bqWMm' },
+  ],
 };
+// Pack Sueldos y Personal: el día a día administrativo (upsell del Kit Liquidación)
+ARCHIVOS['Pack Sueldos y Personal'] = [
+  ...ARCHIVOS['Kit Liquidacion de Sueldo'],
+  ...ARCHIVOS['Control de Vacaciones y Ausencias'],
+];
+// Pack Contratacion: el proceso completo de incorporar a alguien
+ARCHIVOS['Pack Contratacion'] = [
+  ...ARCHIVOS['Kit Reclutamiento y Seleccion'],
+  ...ARCHIVOS['Kit Contratos de Trabajo'],
+  ...ARCHIVOS['Kit Onboarding'],
+];
 ARCHIVOS['Pack Completo'] = [
+  ...ARCHIVOS['Kit Reclutamiento y Seleccion'],
+  ...ARCHIVOS['Kit Contratos de Trabajo'],
   ...ARCHIVOS['Kit Onboarding'],
   ...ARCHIVOS['Kit Liquidacion de Sueldo'],
-  ...ARCHIVOS['Kit Contratos de Trabajo'],
   ...ARCHIVOS['Control de Vacaciones y Ausencias'],
 ];
 
