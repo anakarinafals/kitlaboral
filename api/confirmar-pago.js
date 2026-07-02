@@ -32,6 +32,12 @@ ARCHIVOS['Pack Sueldos y Personal'] = [
   ...ARCHIVOS['Kit Liquidacion de Sueldo'],
   ...ARCHIVOS['Control de Vacaciones y Ausencias'],
 ];
+// Pack Inicio Pro: recluta, recibe y paga sueldos (sin contratos ni vacaciones)
+ARCHIVOS['Pack Inicio Pro'] = [
+  ...ARCHIVOS['Kit Reclutamiento y Seleccion'],
+  ...ARCHIVOS['Kit Onboarding'],
+  ...ARCHIVOS['Kit Liquidacion de Sueldo'],
+];
 // Pack Contratacion: el proceso completo de incorporar a alguien
 ARCHIVOS['Pack Contratacion'] = [
   ...ARCHIVOS['Kit Reclutamiento y Seleccion'],
