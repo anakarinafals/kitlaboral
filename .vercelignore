@@ -1,0 +1,5 @@
+# Carpetas que viven en el repo (respaldo en GitHub) pero NO deben
+# publicarse en kitlaboral.cl — Vercel sirve todo lo demás tal cual.
+docs/
+productos/
+scripts/
