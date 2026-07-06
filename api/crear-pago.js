@@ -3,15 +3,15 @@ const https = require('https');
 const querystring = require('querystring');
 
 const PRODUCTOS = {
-  'pack-completo':      { subject: 'Pack Completo',                     amount: 25990 },
-  'pack-contratacion':  { subject: 'Pack Contratacion',                 amount: 20990 },
-  'pack-sueldos':       { subject: 'Pack Sueldos y Personal',           amount: 15990 },
-  'pack-inicio-pro':    { subject: 'Pack Inicio Pro',                   amount: 20990 },
-  'kit-onboarding':     { subject: 'Kit Onboarding',                    amount: 10990 },
-  'kit-liquidacion':    { subject: 'Kit Liquidacion de Sueldo',         amount: 10990 },
-  'kit-contratos':      { subject: 'Kit Contratos de Trabajo',          amount: 10990 },
-  'kit-vacaciones':     { subject: 'Control de Vacaciones y Ausencias', amount: 10990 },
-  'kit-reclutamiento':  { subject: 'Kit Reclutamiento y Seleccion',     amount: 10990 },
+  'pack-completo':      { subject: 'Pack Completo',                     amount: 24990 },
+  'pack-contratacion':  { subject: 'Pack Contratacion',                 amount: 19990 },
+  'pack-sueldos':       { subject: 'Pack Sueldos y Personal',           amount: 14990 },
+  'pack-inicio-pro':    { subject: 'Pack Inicio Pro',                   amount: 19990 },
+  'kit-onboarding':     { subject: 'Kit Onboarding',                    amount: 9900 },
+  'kit-liquidacion':    { subject: 'Kit Liquidacion de Sueldo',         amount: 9900 },
+  'kit-contratos':      { subject: 'Kit Contratos de Trabajo',          amount: 9900 },
+  'kit-vacaciones':     { subject: 'Control de Vacaciones y Ausencias', amount: 9900 },
+  'kit-reclutamiento':  { subject: 'Kit Reclutamiento y Seleccion',     amount: 9900 },
 };
 
 // Cupones de descuento. montoFijo = deja el producto en ese precio.
