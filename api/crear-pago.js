@@ -56,12 +56,12 @@ function flowPost(path, params) {
 module.exports = async function handler(req, res) {
   const producto = PRODUCTOS[req.query.producto];
   if (!producto) {
-    return res.status(400).send('Producto no válido');
+    return res.status(400).json({ error: 'Producto no válido.' });
   }
 
   const email = (req.query.email || '').trim();
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    return res.status(400).send('Email no válido');
+    return res.status(400).json({ error: 'Ingresa un correo válido.' });
   }
 
   // Aplicar cupón si viene uno (el monto se calcula acá en el servidor, seguro)
@@ -70,7 +70,7 @@ module.exports = async function handler(req, res) {
   if (cupon) {
     const desc = CUPONES[cupon];
     if (!desc) {
-      return res.status(400).send('Cupón no válido');
+      return res.status(400).json({ error: 'Cupón no válido.' });
     }
     amount = desc.montoFijo != null
       ? desc.montoFijo
@@ -92,13 +92,19 @@ module.exports = async function handler(req, res) {
     });
 
     if (pago.url && pago.token) {
-      return res.redirect(302, `${pago.url}?token=${pago.token}`);
+      return res.status(200).json({ url: `${pago.url}?token=${pago.token}` });
     }
 
     console.error('Respuesta Flow inesperada:', pago);
-    return res.status(502).send('Error al iniciar el pago');
+    // 1620 = Flow considera el correo inválido o no entregable.
+    if (pago.code === 1620) {
+      return res.status(400).json({
+        error: 'Ese correo no parece válido o no puede recibir mensajes. Revísalo e inténtalo de nuevo.',
+      });
+    }
+    return res.status(502).json({ error: 'No pudimos iniciar el pago. Intenta nuevamente en unos minutos.' });
   } catch (err) {
     console.error('Error Flow:', err.message);
-    return res.status(500).send('Error al conectar con Flow');
+    return res.status(500).json({ error: 'No pudimos conectar con el sistema de pago. Intenta nuevamente en unos minutos.' });
   }
 };
