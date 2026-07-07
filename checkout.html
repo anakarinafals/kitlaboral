@@ -120,7 +120,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   const btn = document.getElementById('btn');
   const errorEl = document.getElementById('error');
 
-  form.addEventListener('submit', e => {
+  function mostrarError(msg) {
+    errorEl.textContent = msg;
+    errorEl.style.display = 'block';
+    btn.disabled = false;
+    btn.textContent = 'Ir a pagar con Flow →';
+  }
+
+  form.addEventListener('submit', async e => {
     e.preventDefault();
     const email = document.getElementById('email').value.trim();
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
@@ -132,8 +139,18 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     btn.disabled = true;
     btn.textContent = 'Redirigiendo...';
     dataLayer.push({ event: 'inicio_pago', producto: id });
-    location.href = '/api/crear-pago?producto=' + encodeURIComponent(id) +
-                    '&email=' + encodeURIComponent(email);
+    try {
+      const res = await fetch('/api/crear-pago?producto=' + encodeURIComponent(id) +
+                              '&email=' + encodeURIComponent(email));
+      const data = await res.json().catch(() => ({}));
+      if (res.ok && data.url) {
+        location.href = data.url;
+        return;
+      }
+      mostrarError(data.error || 'No pudimos iniciar el pago. Intenta nuevamente en unos minutos.');
+    } catch (err) {
+      mostrarError('Problema de conexión. Revisa tu internet e inténtalo de nuevo.');
+    }
   });
 </script>
 </body>
