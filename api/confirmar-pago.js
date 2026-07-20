@@ -26,6 +26,9 @@ const ARCHIVOS = {
     { nombre: 'Kit Reclutamiento — 2. Entrevistar y Cerrar', url: 'https://drive.google.com/uc?export=download&id=1Uax8BA1fbmk8DnCMRsPHB62bJiQBlaxZ' },
     { nombre: 'Kit Reclutamiento — 3. Matriz Comparadora de Candidatos', url: 'https://drive.google.com/uc?export=download&id=1Tb8gNQtgChhIeaVLkYFBq1JEGJ_bqWMm' },
   ],
+  'Sistema RRHH KitLaboral': [
+    { nombre: 'Sistema RRHH KitLaboral', url: 'https://docs.google.com/spreadsheets/d/12k1cibHxFLVPjlmOmP6r0knBvqOT-P9ZjKAq56wkCCA/export?format=xlsx' },
+  ],
 };
 // Pack Sueldos y Personal: el día a día administrativo (upsell del Kit Liquidación)
 ARCHIVOS['Pack Sueldos y Personal'] = [

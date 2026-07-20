@@ -89,6 +89,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     'kit-contratos':     { nombre: 'Kit Contratos de Trabajo',          precio: 9900 },
     'kit-vacaciones':    { nombre: 'Control de Vacaciones y Ausencias', precio: 9900 },
     'kit-reclutamiento': { nombre: 'Kit Reclutamiento y Selección',     precio: 9900 },
+    'sistema-rrhh':      { nombre: 'Sistema RRHH KitLaboral',           precio: 27990 },
   };
 
   const params = new URLSearchParams(location.search);
@@ -103,8 +104,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     document.getElementById('nombre').textContent = producto.nombre;
     document.getElementById('precio').innerHTML = fmt(producto.precio) + ' <span>CLP</span>';
 
-    // Upsell al Pack Completo: se muestra para todo producto que no sea el completo
-    if (id !== 'pack-completo') {
+    // Upsell al Pack Completo: se muestra para todo producto más barato que el completo
+    if (id !== 'pack-completo' && producto.precio < PRODUCTOS['pack-completo'].precio) {
       const diff = PRODUCTOS['pack-completo'].precio - producto.precio;
       document.getElementById('upsell-diff').textContent = fmt(diff);
       document.getElementById('upsell').style.display = 'block';

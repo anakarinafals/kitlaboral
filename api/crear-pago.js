@@ -12,6 +12,7 @@ const PRODUCTOS = {
   'kit-contratos':      { subject: 'Kit Contratos de Trabajo',          amount: 9900 },
   'kit-vacaciones':     { subject: 'Control de Vacaciones y Ausencias', amount: 9900 },
   'kit-reclutamiento':  { subject: 'Kit Reclutamiento y Seleccion',     amount: 9900 },
+  'sistema-rrhh':       { subject: 'Sistema RRHH KitLaboral',           amount: 27990 },
 };
 
 // Cupones de descuento. montoFijo = deja el producto en ese precio.
