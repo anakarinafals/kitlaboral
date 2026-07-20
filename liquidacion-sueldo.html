@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Planilla de Liquidación de Sueldo Chile 2026 — KitLaboral</title>
+<meta name="description" content="Calcula la liquidación de sueldo de tu equipo al instante. Planilla Excel con AFP, salud, AFC e impuesto único ya cargados según las tasas chilenas 2026. Pago único, sin suscripción.">
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-MMNZ4TFG');</script>
+<!-- End Google Tag Manager -->
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink:      #0A0E1A;
+    --ink-soft: #2A3142;
+    --paper:    #FAF8F3;
+    --cream:    #F2EFE6;
+    --line:     #E8E3D7;
+    --accent:   #1A4A8A;
+    --gold:     #C9A961;
+    --muted:    #6B6F7A;
+    --green:    #4A7C59;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:'Inter',sans-serif;background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  .serif{font-family:'Instrument Serif',serif;font-weight:400;letter-spacing:-0.01em}
+
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,248,243,.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--line);padding:0 2.5rem;height:64px;display:flex;align-items:center;justify-content:space-between}
+  .nav-logo{font-size:.95rem;font-weight:600;letter-spacing:.01em}
+  .nav-logo span{color:var(--accent);font-style:italic;font-family:'Instrument Serif',serif}
+  .nav-cta{background:var(--ink);color:var(--paper);border:none;border-radius:100px;padding:.55rem 1.4rem;font-size:.85rem;font-weight:500;cursor:pointer;text-decoration:none;font-family:inherit;transition:all .2s}
+  .nav-cta:hover{background:var(--accent)}
+
+  .hero{min-height:80vh;display:flex;align-items:center;padding:8rem 2.5rem 4rem;position:relative}
+  .hero::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:60%;height:1px;background:var(--line)}
+  .hero-inner{max-width:880px;margin:0 auto;text-align:center}
+  .hero-eyebrow{display:inline-flex;align-items:center;gap:.5rem;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:500;margin-bottom:2rem}
+  .hero-eyebrow::before,.hero-eyebrow::after{content:'';width:24px;height:1px;background:var(--line)}
+  .hero h1{font-size:clamp(2.3rem,5.5vw,4rem);line-height:1.08;margin-bottom:1.75rem;color:var(--ink)}
+  .hero h1 em{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;color:var(--accent)}
+  .hero-sub{font-size:clamp(1rem,1.6vw,1.15rem);color:var(--ink-soft);line-height:1.6;max-width:600px;margin:0 auto 2.5rem;font-weight:300}
+  .hero-actions{display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap}
+  .btn-dark{background:var(--ink);color:var(--paper);border:none;border-radius:100px;padding:1rem 2.25rem;font-size:.95rem;font-weight:500;cursor:pointer;text-decoration:none;font-family:inherit;transition:all .2s;display:inline-flex;align-items:center;gap:.5rem}
+  .btn-dark:hover{background:var(--accent);transform:translateY(-1px)}
+
+  .hero-strip{margin-top:3.5rem;display:flex;gap:2.5rem;justify-content:center;align-items:center;flex-wrap:wrap;font-size:.8rem;color:var(--muted);font-weight:500;letter-spacing:.02em}
+  .hero-strip span{display:flex;align-items:center;gap:.4rem}
+  .hero-strip span::before{content:'✓';color:var(--green);font-weight:700}
+
+  section{padding:5.5rem 2.5rem}
+  .container{max-width:1100px;margin:0 auto}
+  .label{font-size:.78rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem}
+  .section-title{font-size:clamp(1.9rem,3.6vw,2.6rem);line-height:1.1;margin-bottom:1rem;color:var(--ink)}
+  .section-title em{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400}
+  .section-intro{font-size:1.05rem;color:var(--muted);line-height:1.7;max-width:580px;font-weight:300}
+
+  .pains{background:var(--cream);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .pains-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:3rem;border-top:1px solid var(--line);border-left:1px solid var(--line)}
+  .pain{padding:2.5rem 2rem;border-right:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--paper);transition:background .3s}
+  .pain:hover{background:var(--cream)}
+  .pain-num{font-family:'Instrument Serif',serif;font-style:italic;font-size:1.6rem;color:var(--accent);margin-bottom:1rem;display:block}
+  .pain h3{font-size:1.05rem;font-weight:600;margin-bottom:.6rem;line-height:1.35}
+  .pain p{font-size:.9rem;color:var(--muted);line-height:1.6;font-weight:300}
+
+  .deal{background:var(--ink);color:var(--paper);text-align:center}
+  .deal .label{color:var(--gold)}
+  .deal .section-title{color:var(--paper)}
+  .deal .section-intro{color:rgba(250,248,243,.65);margin:0 auto}
+  .deal-card{background:var(--paper);color:var(--ink);border-radius:24px;padding:3.5rem 2.5rem;margin:3rem auto 0;max-width:640px;position:relative;box-shadow:0 30px 80px rgba(0,0,0,.25)}
+  .deal-badge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--gold);color:var(--ink);padding:.45rem 1.25rem;border-radius:100px;font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+  .deal-title{font-size:1.7rem;line-height:1.2;margin-bottom:.5rem;font-weight:600}
+  .deal-title em{font-family:'Instrument Serif',serif;font-style:italic;font-weight:400;color:var(--accent)}
+  .deal-sub{font-size:.95rem;color:var(--muted);margin-bottom:2rem;font-weight:300}
+  .deal-price-row{display:flex;align-items:baseline;justify-content:center;gap:1rem;margin-bottom:.5rem}
+  .deal-price{font-family:'Instrument Serif',serif;font-size:3.6rem;font-weight:400;color:var(--ink);line-height:1}
+  .deal-currency{font-size:1.1rem;color:var(--muted);font-weight:400}
+  .deal-format{font-size:.8rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:2.5rem}
+  .deal-includes{border-top:1px solid var(--line);padding-top:2rem;margin-bottom:2.5rem}
+  .deal-includes h4{font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:1.25rem;font-weight:600}
+  .deal-list{list-style:none;text-align:left;max-width:440px;margin:0 auto}
+  .deal-list li{padding:.7rem 0;display:flex;align-items:flex-start;gap:.75rem;line-height:1.4;border-bottom:1px solid var(--line)}
+  .deal-list li:last-child{border-bottom:none}
+  .deal-list li::before{content:'✓';color:var(--green);font-weight:700;flex-shrink:0;margin-top:.1rem}
+  .deal-cta{background:var(--ink);color:var(--paper);border:none;border-radius:100px;padding:1.15rem 3rem;font-size:1rem;font-weight:500;cursor:pointer;text-decoration:none;font-family:inherit;transition:all .2s;display:inline-flex;align-items:center;gap:.5rem}
+  .deal-cta:hover{background:var(--accent);transform:translateY(-2px)}
+  .deal-upsell{font-size:.85rem;color:var(--muted);margin-top:1.5rem;text-align:center}
+  .deal-upsell a{color:var(--accent);font-weight:600;text-decoration:none}
+
+  .how{background:var(--cream);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:3rem;margin-top:3rem}
+  .step-num{font-family:'Instrument Serif',serif;font-style:italic;font-size:3rem;color:var(--accent);margin-bottom:1rem;line-height:1}
+  .step h4{font-size:1.05rem;font-weight:600;margin-bottom:.5rem}
+  .step p{font-size:.9rem;color:var(--muted);line-height:1.6;font-weight:300}
+
+  .faq{background:var(--paper)}
+  .faq-list{margin-top:3rem;max-width:760px;margin-left:auto;margin-right:auto}
+  .faq-item{border-bottom:1px solid var(--line);padding:1.5rem 0}
+  .faq-q{font-size:1rem;font-weight:600;color:var(--ink);margin-bottom:.6rem}
+  .faq-a{font-size:.92rem;color:var(--muted);line-height:1.7;font-weight:300;max-width:640px}
+
+  .final{background:var(--ink);color:var(--paper);text-align:center;padding:5.5rem 2.5rem}
+  .final h2{font-size:clamp(2rem,4vw,3rem);line-height:1.1;margin-bottom:1.25rem}
+  .final h2 em{font-family:'Instrument Serif',serif;font-style:italic;color:var(--gold);font-weight:400}
+  .final p{color:rgba(250,248,243,.6);font-size:1.05rem;margin-bottom:2.5rem;font-weight:300}
+  .btn-gold{background:var(--gold);color:var(--ink);border:none;border-radius:100px;padding:1.15rem 3rem;font-size:1rem;font-weight:600;cursor:pointer;text-decoration:none;font-family:inherit;transition:all .2s;display:inline-flex;align-items:center;gap:.5rem}
+  .btn-gold:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(201,169,97,.3)}
+
+  footer{background:var(--ink);padding:2rem;text-align:center;font-size:.78rem;color:rgba(250,248,243,.3);border-top:1px solid rgba(250,248,243,.08)}
+  footer a{color:rgba(250,248,243,.5);text-decoration:none}
+
+  .wa{position:fixed;bottom:1.75rem;right:1.75rem;z-index:99;background:#25D366;color:white;width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.4rem;text-decoration:none;box-shadow:0 6px 24px rgba(37,211,102,.4);transition:all .2s}
+  .wa:hover{transform:scale(1.08)}
+
+  @media (max-width: 900px){
+    nav{padding:0 1.5rem}
+    section{padding:4rem 1.5rem}
+    .pains-grid,.how-grid{grid-template-columns:1fr}
+    .deal-card{padding:2.5rem 1.5rem}
+    .deal-price{font-size:2.8rem}
+    .hero{padding:7rem 1.5rem 3rem}
+    .hero-strip{gap:1rem;font-size:.75rem}
+  }
+</style>
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MMNZ4TFG"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+<nav>
+  <div class="nav-logo">Kit<span>Laboral</span></div>
+  <a href="#comprar" class="nav-cta">Ver precio →</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Planilla de liquidación de sueldo · Chile 2026</div>
+    <h1>Calcula la <em>liquidación de sueldo</em><br>de tu equipo, al instante.</h1>
+    <p class="hero-sub">Escribes el sueldo base y la planilla hace todo el resto: AFP, salud, AFC e impuesto único calculados automáticamente, con las tasas chilenas 2026 ya cargadas.</p>
+    <div class="hero-actions">
+      <a href="#comprar" class="btn-dark">Comprar la planilla · $9.900 →</a>
+    </div>
+    <div class="hero-strip">
+      <span>Pago único</span>
+      <span>Sin suscripción</span>
+      <span>Tasas 2026</span>
+      <span>Descarga inmediata</span>
+    </div>
+  </div>
+</section>
+
+<section class="pains">
+  <div class="container">
+    <div style="text-align:center;max-width:680px;margin:0 auto">
+      <div class="label">El problema</div>
+      <h2 class="section-title">"¿Cuánto le tengo que <em>pagar realmente?</em>"</h2>
+      <p class="section-intro" style="margin:1.5rem auto 0">Cada mes la misma duda al calcular un sueldo líquido. Y un error en el descuento te puede salir caro.</p>
+    </div>
+    <div class="pains-grid">
+      <div class="pain"><span class="pain-num">01</span><h3>AFP, salud, AFC, impuesto único...</h3><p>Son varios descuentos distintos, cada uno con su propia tasa y tope. Calcularlos a mano cada mes es lento y fácil de errar.</p></div>
+      <div class="pain"><span class="pain-num">02</span><h3>Las plantillas gratis de internet</h3><p>Suelen estar desactualizadas o no aplican a la ley chilena. Un descuento mal calculado puede costarte una diferencia real de dinero.</p></div>
+      <div class="pain"><span class="pain-num">03</span><h3>Un software de RRHH es caro</h3><p>Para calcular sueldos de unos pocos trabajadores no necesitas pagar una suscripción mensual — solo una planilla que haga bien el cálculo.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="deal" id="comprar">
+  <div class="container">
+    <div class="label">La solución</div>
+    <h2 class="section-title">Kit Liquidación <em>de Sueldo</em></h2>
+    <p class="section-intro">La planilla que calcula el sueldo líquido correcto, con las tasas chilenas ya cargadas.</p>
+
+    <div class="deal-card">
+      <div class="deal-badge">Pago único · Sin suscripción</div>
+      <h3 class="deal-title">Escribe el sueldo base.<br><em>La planilla hace el resto.</em></h3>
+      <p class="deal-sub">1 archivo Excel · 4 pestañas</p>
+
+      <div class="deal-price-row">
+        <span class="deal-price">$9.900</span>
+        <span class="deal-currency">CLP</span>
+      </div>
+      <div class="deal-format">Descarga inmediata por correo</div>
+
+      <div class="deal-includes">
+        <ul class="deal-list">
+          <li><span>Calcula AFP, salud, AFC e impuesto único automáticamente</span></li>
+          <li><span>Liquidación lista para imprimir y que el trabajador firme cada mes</span></li>
+          <li><span>Tasas y topes 2026 + guía paso a paso para pagar en Previred</span></li>
+        </ul>
+      </div>
+
+      <a href="/checkout.html?producto=kit-liquidacion" class="deal-cta" onclick="dataLayer.push({event:'clic_comprar_liquidacion',ubicacion:'landing_ads'})">Comprar el Kit Liquidación →</a>
+      <p class="deal-upsell">💡 ¿También manejas vacaciones? Llévalo junto al Control de Vacaciones por <a href="/checkout.html?producto=pack-sueldos" onclick="dataLayer.push({event:'clic_comprar_pack_sueldos',ubicacion:'landing_ads'})">$14.990 (ahorras $4.810) →</a></p>
+    </div>
+  </div>
+</section>
+
+<section class="how">
+  <div class="container">
+    <div style="text-align:center;max-width:680px;margin:0 auto">
+      <div class="label">El proceso</div>
+      <h2 class="section-title">Tres pasos. <em>Sin vueltas.</em></h2>
+    </div>
+    <div class="how-grid">
+      <div class="step"><div class="step-num">i.</div><h4>Compras la planilla</h4><p>Haces clic en comprar. Sin formularios eternos ni llamadas de venta.</p></div>
+      <div class="step"><div class="step-num">ii.</div><h4>Pagas seguro</h4><p>Pagas con el medio que prefieras: WebPay, débito, crédito, Khipu, BCI, Etpay o Mach. Pago único, sin suscripciones.</p></div>
+      <div class="step"><div class="step-num">iii.</div><h4>Calculas al instante</h4><p>Te llega el archivo a tu correo. Escribes el sueldo base y la liquidación se genera sola.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="faq">
+  <div class="container">
+    <div style="text-align:center;max-width:680px;margin:0 auto">
+      <div class="label">Preguntas</div>
+      <h2 class="section-title">Lo que más nos <em>preguntan.</em></h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item"><div class="faq-q">¿Cómo recibo la planilla después de pagar?</div><div class="faq-a">Apenas confirmas el pago, recibes el archivo Excel en el correo que registraste en la compra. Si tienes algún problema para descargarlo, nos escribes y lo resolvemos al toque.</div></div>
+      <div class="faq-item"><div class="faq-q">¿Necesito saber Excel avanzado para usarla?</div><div class="faq-a">No. La planilla tiene instrucciones paso a paso, celdas claramente marcadas y notas explicativas en cada campo — solo escribes el sueldo base y los datos del trabajador.</div></div>
+      <div class="faq-item"><div class="faq-q">¿Las tasas y normativa están al día?</div><div class="faq-a">Sí. Todo está actualizado a 2026: comisiones AFP, reforma previsional, tope imponible y tramos de impuesto único de segunda categoría.</div></div>
+      <div class="faq-item"><div class="faq-q">¿Qué pasa si cambia la ley o las tasas?</div><div class="faq-a">La planilla tiene una pestaña de parámetros legales que puedes actualizar tú mismo cuando cambian las tasas — es muy simple, toma un minuto.</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="final">
+  <div class="container">
+    <h2>Deja de calcular sueldos a mano.<br><em>Hazlo bien, en segundos.</em></h2>
+    <p>Pago único · Sin suscripción · Descarga inmediata</p>
+    <a href="/checkout.html?producto=kit-liquidacion" class="btn-gold" onclick="dataLayer.push({event:'clic_comprar_liquidacion',ubicacion:'landing_ads_final'})">Comprar el Kit Liquidación · $9.900 CLP →</a>
+  </div>
+</section>
+
+<footer>© 2026 KitLaboral · Hecho en Chile · <a href="#">Términos de uso</a></footer>
+
+<a href="https://wa.me/56932738010?text=Hola%2C%20tengo%20una%20pregunta%20antes%20de%20comprar" class="wa" title="¿Dudas? Escríbenos" onclick="dataLayer.push({event:'clic_whatsapp',ubicacion:'flotante_ads'})">💬</a>
+
+<script>
+  document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',e=>{const t=document.querySelector(a.getAttribute('href'));if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'})}})});
+  const io=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='translateY(0)'}})},{threshold:.1});
+  document.querySelectorAll('.pain,.step,.faq-item').forEach(el=>{el.style.opacity='0';el.style.transform='translateY(16px)';el.style.transition='opacity .6s ease, transform .6s ease';io.observe(el)});
+</script>
+</body>
+</html>
