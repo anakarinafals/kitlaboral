@@ -61,9 +61,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <div class="resumen-precio" id="precio"></div>
   </div>
 
-  <div id="upsell" style="display:none;background:#FBF6EA;border:1px solid var(--gold);border-radius:12px;padding:1rem 1.25rem;margin:-.75rem 0 1.75rem">
-    <p style="font-size:.85rem;line-height:1.5;color:var(--ink-soft)">⭐ <strong>Por <span id="upsell-diff"></span> más</strong> te llevas los <strong>5 kits completos</strong> (valor $49.500).</p>
+  <div id="upsell" style="display:none;background:#FBF6EA;border:1px solid var(--gold);border-radius:12px;padding:1rem 1.25rem;margin:-.75rem 0 1.25rem">
+    <p style="font-size:.85rem;line-height:1.5;color:var(--ink-soft)">⭐ <strong>Por <span id="upsell-diff"></span> más</strong> te llevas también <strong><span id="upsell-kits"></span></strong> — los 5 kits completos por $24.990.</p>
     <a href="#" id="upsell-link" style="display:inline-block;margin-top:.4rem;font-size:.85rem;font-weight:600;color:var(--accent)">Cambiar a Pack Completo · $24.990 →</a>
+  </div>
+
+  <div id="upsell-rrhh" style="display:none;background:var(--cream);border:1px solid var(--ink-soft);border-radius:12px;padding:1rem 1.25rem;margin:-.75rem 0 1.75rem">
+    <p style="font-size:.85rem;line-height:1.5;color:var(--ink-soft)">🏢 <strong>¿Tienes varios trabajadores?</strong> El Sistema RRHH carga los datos de cada uno UNA vez y genera Liquidación, Certificado y Vacaciones automáticos — para hasta 50 personas.</p>
+    <a href="#" id="upsell-rrhh-link" style="display:inline-block;margin-top:.4rem;font-size:.85rem;font-weight:600;color:var(--accent)">Cambiar al Sistema RRHH · $27.990 →</a>
   </div>
 
   <form id="form">
@@ -92,11 +97,24 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     'sistema-rrhh':      { nombre: 'Sistema RRHH KitLaboral',           precio: 27990 },
   };
 
+  // Qué kits individuales trae cada pack, para poder listar por nombre lo que falta
+  const PACK_KITS = {
+    'pack-completo':     ['kit-reclutamiento', 'kit-contratos', 'kit-onboarding', 'kit-liquidacion', 'kit-vacaciones'],
+    'pack-sueldos':      ['kit-liquidacion', 'kit-vacaciones'],
+    'pack-contratacion': ['kit-reclutamiento', 'kit-contratos', 'kit-onboarding'],
+    'pack-inicio-pro':   ['kit-reclutamiento', 'kit-onboarding', 'kit-liquidacion'],
+  };
+
   const params = new URLSearchParams(location.search);
   const id = params.get('producto');
   const producto = PRODUCTOS[id];
 
   function fmt(n) { return '$' + n.toLocaleString('es-CL'); }
+
+  function listaLegible(nombres) {
+    if (nombres.length === 1) return nombres[0];
+    return nombres.slice(0, -1).join(', ') + ' y ' + nombres[nombres.length - 1];
+  }
 
   if (!producto) {
     location.href = '/';
@@ -104,15 +122,28 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     document.getElementById('nombre').textContent = producto.nombre;
     document.getElementById('precio').innerHTML = fmt(producto.precio) + ' <span>CLP</span>';
 
-    // Upsell al Pack Completo: se muestra para todo producto más barato que el completo
+    // Upsell al Pack Completo: lista por nombre los kits que le faltan, no solo "5 kits"
     if (id !== 'pack-completo' && producto.precio < PRODUCTOS['pack-completo'].precio) {
+      const yaTiene = PACK_KITS[id] || [id];
+      const faltantes = PACK_KITS['pack-completo'].filter(k => !yaTiene.includes(k));
       const diff = PRODUCTOS['pack-completo'].precio - producto.precio;
       document.getElementById('upsell-diff').textContent = fmt(diff);
+      document.getElementById('upsell-kits').textContent = listaLegible(faltantes.map(k => PRODUCTOS[k].nombre));
       document.getElementById('upsell').style.display = 'block';
       document.getElementById('upsell-link').addEventListener('click', e => {
         e.preventDefault();
         dataLayer.push({ event: 'upgrade_pack_completo', desde: id });
         location.href = '/checkout.html?producto=pack-completo';
+      });
+    }
+
+    // Upsell al Sistema RRHH: solo tiene sentido viniendo de Liquidación o Pack Sueldos
+    if (id === 'kit-liquidacion' || id === 'pack-sueldos') {
+      document.getElementById('upsell-rrhh').style.display = 'block';
+      document.getElementById('upsell-rrhh-link').addEventListener('click', e => {
+        e.preventDefault();
+        dataLayer.push({ event: 'upgrade_sistema_rrhh', desde: id });
+        location.href = '/checkout.html?producto=sistema-rrhh';
       });
     }
   }
